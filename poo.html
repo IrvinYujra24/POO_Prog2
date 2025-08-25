@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programación Orientada a Objetos</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4a6fa5;
+            --secondary: #166088;
+            --accent: #4fc3f7;
+            --light: #f5f7fa;
+            --dark: #2c3e50;
+            --success: #4caf50;
+            --warning: #ff9800;
+            --danger: #f44336;
+            --gray: #6c757d;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: var(--light);
+            min-height: 100vh;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            text-align: center;
+            padding: 2.5rem 1rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 2rem;
+        }
+
+        .sidebar {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+            padding: 1.5rem;
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+
+        .sidebar h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent);
+        }
+
+        .menu {
+            list-style: none;
+        }
+
+        .menu-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .menu-link {
+            display: flex;
+            align-items: center;
+            padding: 0.8rem 1rem;
+            color: var(--dark);
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .menu-link:hover, .menu-link.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .menu-link i {
+            margin-right: 0.8rem;
+            font-size: 1.2rem;
+        }
+
+        .content {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .content-header {
+            background: var(--primary);
+            color: white;
+            padding: 1.8rem;
+            font-size: 1.8rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+
+        .content-header i {
+            margin-right: 1rem;
+            font-size: 1.8rem;
+        }
+
+        .content-body {
+            padding: 2rem;
+        }
+
+        .section {
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            color: var(--secondary);
+            margin-bottom: 1.2rem;
+            font-size: 1.5rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title i {
+            margin-right: 0.8rem;
+            color: var(--accent);
+        }
+
+        p {
+            margin-bottom: 1rem;
+            text-align: justify;
+        }
+
+        .highlight {
+            background: #e3f2fd;
+            border-left: 4px solid var(--accent);
+            padding: 1.2rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            border-radius: 8px;
+            padding: 1.2rem;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .code-keyword {
+            color: #f08d49;
+            font-weight: bold;
+        }
+
+        .code-string {
+            color: #b5cea8;
+        }
+
+        .code-comment {
+            color: #7c7c7c;
+            font-style: italic;
+        }
+
+        .illustration {
+            text-align: center;
+            margin: 2rem 0;
+            padding: 2rem;
+            background: #f8fafc;
+            border-radius: 12px;
+            border: 1px dashed #cbd5e0;
+        }
+
+        .illustration img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .illustration p {
+            margin-top: 1rem;
+            font-style: italic;
+            color: var(--gray);
+        }
+
+        .exercises {
+            margin-top: 2rem;
+        }
+
+        .exercise-card {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .exercise-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border-color: var(--accent);
+        }
+
+        .exercise-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .exercise-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .difficulty {
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .difficulty.basico {
+            background: #e8f5e9;
+            color: var(--success);
+        }
+
+        .difficulty.medio {
+            background: #fff8e1;
+            color: var(--warning);
+        }
+
+        .difficulty.avanzado {
+            background: #ffebee;
+            color: var(--danger);
+        }
+
+        .exercise-body {
+            margin-bottom: 1rem;
+        }
+
+        .exercise-footer {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .btn:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        .btn.solution {
+            background: var(--success);
+            margin-left: 0.5rem;
+        }
+
+        .btn.solution:hover {
+            background: #388e3c;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: var(--dark);
+            color: white;
+            margin-top: 3rem;
+        }
+
+        .progress-container {
+            margin-top: 2rem;
+            background: #e0e0e0;
+            border-radius: 10px;
+            height: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: var(--accent);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        @media (max-width: 992px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                position: static;
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .container {
+                padding: 1rem;
+            }
+            
+            .content-header {
+                font-size: 1.5rem;
+                padding: 1.5rem;
+            }
+            
+            .content-body {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <h1>Programación Orientada a Objetos</h1>
+        <p class="subtitle">Aprende los fundamentos de la POO con ejemplos prácticos, ejercicios y actividades interactivas</p>
+    </header>
+
+    <div class="container">
+        <aside class="sidebar">
+            <h2><i class="fas fa-book"></i> Temas</h2>
+            <ul class="menu">
+                <li class="menu-item">
+                    <a href="#" class="menu-link active" onclick="cambiarSeccion('introduccion')">
+                        <i class="fas fa-home"></i> Introducción a la POO
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="#" class="menu-link" onclick="cambiarSeccion('encapsulamiento')">
+                        <i class="fas fa-shield-alt"></i> Encapsulamiento
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="#" class="menu-link" onclick="cambiarSeccion('herencia')">
+                        <i class="fas fa-sitemap"></i> Herencia
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="#" class="menu-link" onclick="cambiarSeccion('polimorfismo')">
+                        <i class="fas fa-random"></i> Polimorfismo
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="#" class="menu-link" onclick="cambiarSeccion('ejercicios')">
+                        <i class="fas fa-laptop-code"></i> Ejercicios Prácticos
+                    </a>
+                </li>
+            </ul>
+            
+            <div style="margin-top: 2rem; padding: 1rem; background: #f8f9fa; border-radius: 8px;">
+                <h3 style="color: var(--primary); margin-bottom: 0.8rem;"><i class="fas fa-chart-line"></i> Progreso</h3>
+                <div class="progress-container">
+                    <div class="progress-bar" id="progress-bar"></div>
+                </div>
+                <p style="margin-top: 0.5rem; font-size: 0.9rem; color: var(--gray); text-align: center;">0%</p>
+            </div>
+        </aside>
+
+        <main class="content">
+            <!-- Introducción a la POO -->
+            <div id="introduccion" class="seccion-activa">
+                <div class="content-header">
+                    <i class="fas fa-home"></i> Introducción a la Programación Orientada a Objetos
+                </div>
+                <div class="content-body">
+                    <div class="section">
+                        <h2 class="section-title"><i class="fas fa-info-circle"></i> ¿Qué es la POO?</h2>
+                        <p>La Programación Orientada a Objetos (POO) es un paradigma de programación que utiliza "objetos" para diseñar aplicaciones y programas de software. Los objetos son instancias de clases, que pueden contener datos en forma de campos (también llamados atributos o propiedades) y código en forma de procedimientos (métodos).</p>
+                        
+                        <div class="highlight">
+                            <p><strong>Concepto clave:</strong> La POO se basa en cuatro principios fundamentales: <strong>Encapsulamiento</strong>, <strong>Abstracción</strong>, <strong>Herencia</strong> y <strong>Polimorfismo</strong>. Estos principios ayudan a crear código más modular, reutilizable y fácil de mantener.</p>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h2 class="section-title"><i class="fas fa-cube"></i> Conceptos Básicos</h2>
+                        <p><strong>Clase:</strong> Una clase es una plantilla o modelo para crear objetos. Define las propiedades y comportamientos que los objetos de esa clase tendrán.</p>
+                        <p><strong>Objeto:</strong> Un objeto es una instancia de una clase. Es una entidad con estado (atributos) y comportamiento (métodos).</p>
+                        <p><strong>Atributo:</strong> Las características o propiedades de un objeto.</p>
+                        <p><strong>Método:</strong> Las acciones o comportamientos que un objeto puede realizar.</p>
+                    </div>
+
+                    <div class="section">
+                        <h2 class="section-title"><i class="fas fa-code"></i> Ejemplo Práctico</h2>
+                        <p>Veamos un ejemplo básico de una clase en Java:</p>
+                        
+                        <div class="code-block">
+                            <span class="code-keyword">public class</span> Coche {
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// Atributos</span>
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">private String</span> marca;
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">private String</span> modelo;
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">private int</span> año;
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">private boolean</span> encendido = <span class="code-keyword">false</span>;
+                            <br><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// Constructor</span>
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">public</span> Coche(<span class="code-keyword">String</span> marca, <span class="code-keyword">String</span> modelo, <span class="code-keyword">int</span> año) {
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">this</span>.marca = marca;
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">this</span>.modelo = modelo;
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">this</span>.año = año;
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+                            <br><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// Métodos</span>
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">public void</span> encender() {
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;encendido = <span class="code-keyword">true</span>;
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<span class="code-string">"El coche se ha encendido"</span>);
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+                            <br><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">public void</span> acelerar() {
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">if</span> (encendido) {
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<span class="code-string">"El coche está acelerando"</span>);
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} <span class="code-keyword">else</span> {
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<span class="code-string">"Primero debes encender el coche"</span>);
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+                            <br><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// Getters y setters</span>
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">public String</span> getMarca() {
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> marca;
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+                            <br>}
+                        </div>
+                    </div>
+
+                    <div class="illustration">
+                        <div style="font-size: 5rem; color: var(--primary); margin-bottom: 1rem;">
+                            <i class="fas fa-cubes"></i>
+                        </div>
+                        <p>La POO organiza el software en objetos que interactúan entre sí, como piezas de un rompecabezas</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Encapsulamiento -->
+            <div id="encapsulamiento" class="hidden">
+                <div class="content-header">
+                    <i class="fas fa-shield-alt"></i> Encapsulamiento
+                </div>
+                <div class="content-body">
+                    <div class="section">
+                        <h2 class="section-title"><i class="fas fa-info-circle"></i> ¿Qué es el Encapsulamiento?</h2>
+                        <p>El encapsulamiento es un principio de la POO que consiste en ocultar los detalles internos de un objeto y exponer solo lo necesario a través de una interfaz pública. Es como una cápsula que protege los datos internos del objeto.</p>
+                        
+                        <div class="highlight">
+                            <p><strong>Beneficios del encapsulamiento:</strong> Mejora la seguridad, facilita el mantenimiento, permite cambiar la implementación interna sin afectar al código que usa la clase, y previene que los datos se modifiquen de forma inapropiada.</p>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h2 class="section-title"><i class="fas fa-lock"></i> Cómo Implementar el Encapsulamiento</h2>
+                        <p>En Java, el encapsulamiento se logra utilizando modificadores de acceso:</p>
+                        <ul style="margin: 1rem 0 1rem 2rem;">
+                            <li><strong>private:</strong> Accesible solo dentro de la misma clase</li>
+                            <li><strong>protected:</strong> Accesible dentro de la misma clase y sus subclases</li>
+                            <li><strong>default (package-private):</strong> Accesible dentro del mismo paquete</li>
+                            <li><strong>public:</strong> Accesible desde cualquier lugar</li>
+                        </ul>
+                    </div>
+
+                    <div class="section">
+                        <h2 class="section-title"><i class="fas fa-code"></i> Ejemplo Práctico</h2>
+                        <p>Veamos cómo aplicar el encapsulamiento en una clase de cuenta bancaria:</p>
+                        
+                        <div class="code-block">
+                            <span class="code-keyword">public class</span> CuentaBancaria {
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// Atributos privados - encapsulados</span>
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">private String</span> numeroCuenta;
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">private double</span> saldo;
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">private String</span> titular;
+                            <br><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">public</span> CuentaBancaria(<span class="code-keyword">String</span> numeroCuenta, <span class="code-keyword">String</span> titular) {
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">this</span>.numeroCuenta = numeroCuenta;
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">this</span>.titular = titular;
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">this</span>.saldo = 0;
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+                            <br><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// Métodos públicos para interactuar con la cuenta</span>
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">public void</span> depositar(<span class="code-keyword">double</span> cantidad) {
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">if</span> (cantidad > 0) {
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;saldo += cantidad;
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<span class="code-string">"Depósito de $"</span> + cantidad + <span class="code-string">" realizado"</span>);
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} <span class="code-keyword">else</span> {
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<span class="code-string">"La cantidad debe ser positiva"</span>);
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+                            <br><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">public boolean</span> retirar(<span class="code-keyword">double</span> cantidad) {
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">if</span> (cantidad > 0 && cantidad <= saldo) {
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;saldo -= cantidad;
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<span class="code-string">"Retiro de $"</span> + cantidad + <span class="code-string">" realizado"</span>);
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return true</span>;
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} <span class="code-keyword">else</span> {
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<span class="code-string">"Fondos insuficientes o cantidad inválida"</span>);
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return false</span>;
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+                            <br><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// Getters (accesores)</span>
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">public double</span> getSaldo() {
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> saldo;
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+                            <br><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">public String</span> getNumeroCuenta() {
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> numeroCuenta;
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+                            <br><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">public String</span> getTitular() {
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> titular;
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+                            <br>}
+                        </div>
+                    </div>
+
+                    <div class="illustration">
+                        <div style="font-size: 5rem; color: var(--primary); margin-bottom: 1rem;">
+                            <i class="fas fa-box"></i>
+                        </div>
+                        <p>El encapsulamiento es como una caja fuerte: protege los datos valiosos y solo permite acceso controlado</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Herencia -->
+            <div id="herencia" class="hidden">
+                <div class="content-header">
+                    <i class="fas fa-sitemap"></i> Herencia
+                </div>
+                <div class="content-body">
+                    <div class="section">
+                        <h2 class="section-title"><i class="fas fa-info-circle"></i> ¿Qué es la Herencia?</h2>
+                        <p>La herencia es un mecanismo que permite crear nuevas clases basadas en clases existentes. La clase nueva (subclase o clase derivada) hereda los atributos y métodos de la clase existente (superclase o clase base) y puede agregar nuevos atributos y métodos o modificar los existentes.</p>
+                        
+                        <div class="highlight">
+                            <p><strong>Principio de reutilización:</strong> La herencia promueve la reutilización de código, permitiendo que las subclases aprovechen la funcionalidad existente sin tener que volver a escribirla. Esto sigue el principio DRY (Don't Repeat Yourself).</p>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h2 class="section-title"><i class="fas fa-project-diagram"></i> Jerarquía de Clases</h2>
+                        <p>La herencia crea una relación "es un" entre clases. Por ejemplo, un <strong>Círculo</strong> <em>es una</em> <strong>Forma</strong>, un <strong>Perro</strong> <em>es un</em> <strong>Animal</strong>.</p>
+                        
+                        <div class="illustration">
+                            <div style="display: flex; flex-direction: column; align-items: center; gap: 1rem;">
+                                <div style="background: white; border: 2px solid var(--primary); border-radius: 8px; padding: 0.8rem 1.5rem; font-weight: bold;">
+                                    Forma
+                                </div>
+                                <i class="fas fa-long-arrow-alt-down" style="color: var(--primary); font-size: 1.5rem;"></i>
+                                <div style="display: flex; gap: 2rem; flex-wrap: wrap;">
+                                    <div style="background: white; border: 2px solid var(--accent); border-radius: 8px; padding: 0.8rem 1.5rem;">
+                                        Círculo
+                                    </div>
+                                    <div style="background: white; border: 2px solid var(--accent); border-radius: 8px; padding: 0.8rem 1.5rem;">
+                                        Rectángulo
+                                    </div>
+                                    <div style="background: white; border: 2px solid var(--accent); border-radius: 8px; padding: 0.8rem 1.5rem;">
+                                        Triángulo
+                                    </div>
+                                </div>
+                            </div>
+                            <p style="margin-top: 1rem;">Jerarquía de clases con herencia</p>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h2 class="section-title"><i class="fas fa-code"></i> Ejemplo Práctico</h2>
+                        <p>Implementemos una jerarquía de clases para formas geométricas:</p>
+                        
+                        <div class="code-block">
+                            <span class="code-keyword">public abstract class</span> Forma {
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">protected String</span> color;
+                            <br><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">public</span> Forma(<span class="code-keyword">String</span> color) {
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">this</span>.color = color;
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+                            <br><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">public abstract double</span> calcularArea();
+                            <br><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">public abstract double</span> calcularPerimetro();
+                            <br><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">public String</span> getColor() {
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> color;
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+                            <br>}
+                            <br><br><span class="code-keyword">public class</span> Circulo <span class="code-keyword">extends</span> Forma {
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">private double</span> radio;
+                            <br><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">public</span> Circulo(<span class="code-keyword">String</span> color, <span class="code-keyword">double</span> radio) {
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">super</span>(color);
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">this</span>.radio = radio;
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+                            <br><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">@Override</span>
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">public double</span> calcularArea() {
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> Math.PI * radio * radio;
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+                            <br><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">@Override</span>
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">public double</span> calcularPerimetro() {
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> 2 * Math.PI * radio;
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+                            <br>}
+                            <br><br><span class="code-keyword">public class</span> Rectangulo <span class="code-keyword">extends</span> Forma {
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">private double</span> ancho, alto;
+                            <br><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">public</span> Rectangulo(<span class="code-keyword">String</span> color, <span class="code-keyword">double</span> ancho, <span class="code-keyword">double</span> alto) {
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">super</span>(color);
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">this</span>.ancho = ancho;
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">this</span>.alto = alto;
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+                            <br><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">@Override</span>
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">public double</span> calcularArea() {
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> ancho * alto;
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+                            <br><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">@Override</span>
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">public double</span> calcularPerimetro() {
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> 2 * (ancho + alto);
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+                            <br>}
+                        </div>
+                    </div>
+
+                    <div class="illustration">
+                        <div style="font-size: 5rem; color: var(--primary); margin-bottom: 1rem;">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <p>La herencia es como una familia: las generaciones más jóvenes heredan características de sus ancestros</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Polimorfismo -->
+            <div id="polimorfismo" class="hidden">
+                <div class="content-header">
+                    <i class="fas fa-random"></i> Polimorfismo
+                </div>
+                <div class="content-body">
+                    <div class="section">
+                        <h2 class="section-title"><i class="fas fa-info-circle"></i> ¿Qué es el Polimorfismo?</h2>
+                        <p>El polimorfismo es la capacidad de un objeto para tomar muchas formas. En POO, permite que objetos de diferentes tipos respondan al mismo mensaje de maneras diferentes. La palabra proviene del griego y significa "muchas formas".</p>
+                        
+                        <div class="highlight">
+                            <p><strong>Principio clave:</strong> El polimorfismo permite escribir código más flexible y reutilizable. Un mismo método puede comportarse de manera diferente dependiendo del tipo de objeto que lo invoca.</p>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h2 class="section-title"><i class="fas fa-cogs"></i> Tipos de Polimorfismo</h2>
+                        <p>Existen dos tipos principales de polimorfismo:</p>
+                        
+                        <div style="display: flex; gap: 1.5rem; margin: 1.5rem 0; flex-wrap: wrap;">
+                            <div style="flex: 1; min-width: 250px; background: #e3f2fd; border-radius: 8px; padding: 1.2rem;">
+                                <h3 style="color: var(--primary); margin-bottom: 0.8rem;"><i class="fas fa-clock"></i> En tiempo de compilación</h3>
+                                <p><strong>Sobrecarga de métodos:</strong> Múltiples métodos con el mismo nombre pero diferentes parámetros. El compilador decide cuál método llamar.</p>
+                            </div>
+                            <div style="flex: 1; min-width: 250px; background: #e8f5e9; border-radius: 8px; padding: 1.2rem;">
+                                <h3 style="color: var(--success); margin-bottom: 0.8rem;"><i class="fas fa-running"></i> En tiempo de ejecución</h3>
+                                <p><strong>Anulación de métodos:</strong> Una subclase proporciona una implementación específica de un método ya definido en su superclase.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h2 class="section-title"><i class="fas fa-code"></i> Ejemplo Práctico</h2>
+                        <p>Demostración del polimorfismo con formas geométricas:</p>
+                        
+                        <div class="code-block">
+                            <span class="code-keyword">public class</span> DemoPolimorfismo {
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">public static void</span> main(<span class="code-keyword">String</span>[] args) {
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// Array de referencias a Forma</span>
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Forma[] formas = <span class="code-keyword">new</span> Forma[3];
+                            <br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;formas[0] = <span class="code-keyword">new</span> Circulo(<span class="code-string">"Rojo"</span>, 5.0);
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;formas[1] = <span class="code-keyword">new</span> Rectangulo(<span class="code-string">"Azul"</span>, 4.0, 6.0);
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;formas[2] = <span class="code-keyword">new</span> Triangulo(<span class="code-string">"Verde"</span>, 3.0, 8.0);
+                            <br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// Polimorfismo en acción</span>
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">for</span> (Forma forma : formas) {
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<span class="code-string">"Color: "</span> + forma.getColor());
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<span class="code-string">"Área: "</span> + forma.calcularArea());
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<span class="code-string">"Perímetro: "</span> + forma.calcularPerimetro());
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<span class="code-string">"--------"</span>);
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+                            <br>}
+                        </div>
+                        
+                        <p>En este ejemplo, aunque todas las referencias son de tipo <code>Forma</code>, el método <code>calcularArea()</code> que se ejecuta depende del tipo real del objeto en tiempo de ejecución.</p>
+                    </div>
+
+                    <div class="illustration">
+                        <div style="font-size: 5rem; color: var(--primary); margin-bottom: 1rem;">
+                            <i class="fas fa-puzzle-piece"></i>
+                        </div>
+                        <p>El polimorfismo es como un rompecabezas: muchas piezas diferentes que encajan en el mismo espacio</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ejercicios Prácticos -->
+            <div id="ejercicios" class="hidden">
+                <div class="content-header">
+                    <i class="fas fa-laptop-code"></i> Ejercicios Prácticos
+                </div>
+                <div class="content-body">
+                    <div class="section">
+                        <h2 class="section-title"><i class="fas fa-medal"></i> Ejercicios de Nivel Básico</h2>
+                        
+                        <div class="exercise-card">
+                            <div class="exercise-header">
+                                <div class="exercise-title">Clase Persona</div>
+                                <span class="difficulty basico">Básico</span>
+                            </div>
+                            <div class="exercise-body">
+                                <p>Crea una clase <code>Persona</code> con los atributos nombre, edad y género. Implementa un constructor, getters y setters, y un método <code>presentarse()</code> que imprima un mensaje con la información de la persona.</p>
+                            </div>
+                            <div class="exercise-footer">
+                                <button class="btn solution" onclick="mostrarSolucion('basico1')">Ver Solución</button>
+                            </div>
+                            <div class="code-block hidden" id="solucion-basico1">
+                                <span class="code-keyword">public class</span> Persona {
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">private String</span> nombre;
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">private int</span> edad;
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">private String</span> genero;
+                                <br><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">public</span> Persona(<span class="code-keyword">String</span> nombre, <span class="code-keyword">int</span> edad, <span class="code-keyword">String</span> genero) {
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">this</span>.nombre = nombre;
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">this</span>.edad = edad;
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">this</span>.genero = genero;
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+                                <br><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">public void</span> presentarse() {
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<span class="code-string">"Hola, soy "</span> + nombre + <span class="code-string">", tengo "</span> + edad + <span class="code-string">" años y soy "</span> + genero);
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+                                <br><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// Getters y setters...</span>
+                                <br>}
+                            </div>
+                        </div>
+
+                        <div class="exercise-card">
+                            <div class="exercise-header">
+                                <div class="exercise-title">Clase Libro</div>
+                                <span class="difficulty basico">Básico</span>
+                            </div>
+                            <div class="exercise-body">
+                                <p>Crea una clase <code>Libro</code> con atributos título, autor y año de publicación. Implementa métodos para obtener y modificar estos atributos, y un método <code>mostrarInformacion()</code> que imprima todos los detalles del libro.</p>
+                            </div>
+                            <div class="exercise-footer">
+                                <button class="btn solution" onclick="mostrarSolucion('basico2')">Ver Solución</button>
+                            </div>
+                            <div class="code-block hidden" id="solucion-basico2">
+                                <span class="code-keyword">public class</span> Libro {
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">private String</span> titulo;
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">private String</span> autor;
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">private int</span> anioPublicacion;
+                                <br><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">public</span> Libro(<span class="code-keyword">String</span> titulo, <span class="code-keyword">String</span> autor, <span class="code-keyword">int</span> anioPublicacion) {
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">this</span>.titulo = titulo;
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">this</span>.autor = autor;
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">this</span>.anioPublicacion = anioPublicacion;
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+                                <br><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">public void</span> mostrarInformacion() {
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<span class="code-string">"Título: "</span> + titulo);
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<span class="code-string">"Autor: "</span> + autor);
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<span class="code-string">"Año: "</span> + anioPublicacion);
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+                                <br><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// Getters y setters...</span>
+                                <br>}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h2 class="section-title"><i class="fas fa-chess-knight"></i> Ejercicios de Nivel Medio</h2>
+                        
+                        <div class="exercise-card">
+                            <div class="exercise-header">
+                                <div class="exercise-title">Sistema de Empleados</div>
+                                <span class="difficulty medio">Medio</span>
+                            </div>
+                            <div class="exercise-body">
+                                <p>Crea una jerarquía de clases para un sistema de empleados. Define una clase base <code>Empleado</code> con atributos nombre, salario y métodos para calcular salario. Luego crea clases derivadas <code>EmpleadoTiempoCompleto</code> y <code>EmpleadoPorHoras</code> que implementen el cálculo de salario de manera diferente.</p>
+                            </div>
+                            <div class="exercise-footer">
+                                <button class="btn solution" onclick="mostrarSolucion('medio1')">Ver Solución</button>
+                            </div>
+                            <div class="code-block hidden" id="solucion-medio1">
+                                <span class="code-keyword">public abstract class</span> Empleado {
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">protected String</span> nombre;
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">protected double</span> salarioBase;
+                                <br><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">public</span> Empleado(<span class="code-keyword">String</span> nombre, <span class="code-keyword">double</span> salarioBase) {
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">this</span>.nombre = nombre;
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">this</span>.salarioBase = salarioBase;
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+                                <br><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">public abstract double</span> calcularSalario();
+                                <br>}
+                                <br><br><span class="code-keyword">public class</span> EmpleadoTiempoCompleto <span class="code-keyword">extends</span> Empleado {
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">public</span> EmpleadoTiempoCompleto(<span class="code-keyword">String</span> nombre, <span class="code-keyword">double</span> salarioBase) {
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">super</span>(nombre, salarioBase);
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+                                <br><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">@Override</span>
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">public double</span> calcularSalario() {
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> salarioBase;
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+                                <br>}
+                                <br><br><span class="code-keyword">public class</span> EmpleadoPorHoras <span class="code-keyword">extends</span> Empleado {
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">private int</span> horasTrabajadas;
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">private double</span> tarifaPorHora;
+                                <br><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">public</span> EmpleadoPorHoras(<span class="code-keyword">String</span> nombre, <span class="code-keyword">double</span> tarifaPorHora) {
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">super</span>(nombre, 0);
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">this</span>.tarifaPorHora = tarifaPorHora;
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+                                <br><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">public void</span> setHorasTrabajadas(<span class="code-keyword">int</span> horas) {
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horasTrabajadas = horas;
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+                                <br><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">@Override</span>
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">public double</span> calcularSalario() {
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> horasTrabajadas * tarifaPorHora;
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+                                <br>}
+                            </div>
+                        </div>
+
+                        <div class="exercise-card">
+                            <div class="exercise-header">
+                                <div class="exercise-title">Sistema de Figuras</div>
+                                <span class="difficulty medio">Medio</span>
+                            </div>
+                            <div class="exercise-body">
+                                <p>Implementa un sistema de figuras geométricas utilizando herencia y polimorfismo. Crea una clase abstracta <code>Figura</code> con métodos abstractos <code>calcularArea()</code> y <code>calcularPerimetro()</code>. Luego implementa clases concretas para <code>Circulo</code>, <code>Rectangulo</code> y <code>Triangulo</code>.</p>
+                            </div>
+                            <div class="exercise-footer">
+                                <button class="btn solution" onclick="mostrarSolucion('medio2')">Ver Solución</button>
+                            </div>
+                            <div class="code-block hidden" id="solucion-medio2">
+                                <span class="code-keyword">public abstract class</span> Figura {
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">public abstract double</span> calcularArea();
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">public abstract double</span> calcularPerimetro();
+                                <br>}
+                                <br><br><span class="code-keyword">public class</span> Circulo <span class="code-keyword">extends</span> Figura {
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">private double</span> radio;
+                                <br><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">public</span> Circulo(<span class="code-keyword">double</span> radio) {
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">this</span>.radio = radio;
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+                                <br><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">@Override</span>
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">public double</span> calcularArea() {
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> Math.PI * radio * radio;
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+                                <br><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">@Override</span>
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">public double</span> calcularPerimetro() {
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> 2 * Math.PI * radio;
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+                                <br>}
+                                <br><br><span class="code-comment">// Implementaciones similares para Rectangulo y Triangulo...</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h2 class="section-title"><i class="fas fa-chess-king"></i> Ejercicios de Nivel Avanzado</h2>
+                        
+                        <div class="exercise-card">
+                            <div class="exercise-header">
+                                <div class="exercise-title">Sistema de Gestión de Biblioteca</div>
+                                <span class="difficulty avanzado">Avanzado</span>
+                            </div>
+                            <div class="exercise-body">
+                                <p>Desarrolla un sistema completo de gestión de biblioteca que incluya clases para Libros, Revistas, Usuarios, Préstamos, etc. Utiliza todos los principios de POO: encapsulamiento, herencia, polimorfismo y abstracción. Implementa un sistema de préstamos con diferentes tipos de usuarios (estudiantes, profesores) que tengan diferentes políticas de préstamo.</p>
+                            </div>
+                            <div class="exercise-footer">
+                                <button class="btn solution" onclick="mostrarSolucion('avanzado1')">Ver Solución</button>
+                            </div>
+                            <div class="code-block hidden" id="solucion-avanzado1">
+                                <span class="code-keyword">public abstract class</span> Publicacion {
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">protected String</span> titulo;
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">protected String</span> autor;
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">protected boolean</span> disponible;
+                                <br><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">public abstract int</span> getDiasPrestamo();
+                                <br>}
+                                <br><br><span class="code-keyword">public class</span> Libro <span class="code-keyword">extends</span> Publicacion {
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">private String</span> isbn;
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">private int</span> paginas;
+                                <br><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">@Override</span>
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">public int</span> getDiasPrestamo() {
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> 14; <span class="code-comment">// 2 semanas</span>
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+                                <br>}
+                                <br><br><span class="code-keyword">public abstract class</span> Usuario {
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">protected String</span> nombre;
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">protected String</span> id;
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">protected List</span><Publicacion> prestamos;
+                                <br><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">public abstract boolean</span> puedePrestarMas();
+                                <br>}
+                                <br><br><span class="code-keyword">public class</span> Estudiante <span class="code-keyword">extends</span> Usuario {
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">@Override</span>
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">public boolean</span> puedePrestarMas() {
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> prestamos.size() < 5;
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+                                <br>}
+                                <br><br><span class="code-keyword">public class</span> Profesor <span class="code-keyword">extends</span> Usuario {
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">@Override</span>
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">public boolean</span> puedePrestarMas() {
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> prestamos.size() < 10;
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+                                <br>}
+                                <br><br><span class="code-keyword">public class</span> Biblioteca {
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">private List</span><Publicacion> publicaciones;
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">private List</span><Usuario> usuarios;
+                                <br><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">public boolean</span> prestarPublicacion(Usuario usuario, Publicacion publicacion) {
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">if</span> (publicacion.disponible && usuario.puedePrestarMas()) {
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;publicacion.disponible = <span class="code-keyword">false</span>;
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;usuario.prestamos.add(publicacion);
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return true</span>;
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} <span class="code-keyword">else</span> {
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return false</span>;
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+                                <br>}
+                            </div>
+                        </div>
+
+                        <div class="exercise-card">
+                            <div class="exercise-header">
+                                <div class="exercise-title">Juego de Rol (RPG)</div>
+                                <span class="difficulty avanzado">Avanzado</span>
+                            </div>
+                            <div class="exercise-body">
+                                <p>Desarrolla un sistema de juego de rol que incluya clases para Personajes, Enemigos, Armas, Hechizos, etc. Implementa un sistema de combate utilizando polimorfismo, donde diferentes tipos de personajes y enemigos tengan diferentes comportamientos de ataque. Utiliza patrones de diseño como Strategy para diferentes tipos de ataques.</p>
+                            </div>
+                            <div class="exercise-footer">
+                                <button class="btn solution" onclick="mostrarSolacion('avanzado2')">Ver Solución</button>
+                            </div>
+                            <div class="code-block hidden" id="solucion-avanzado2">
+                                <span class="code-keyword">public interface</span> EstrategiaAtaque {
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">void</span> atacar(Personaje atacante, Personaje objetivo);
+                                <br>}
+                                <br><br><span class="code-keyword">public class</span> AtaqueFisico <span class="code-keyword">implements</span> EstrategiaAtaque {
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">@Override</span>
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">public void</span> atacar(Personaje atacante, Personaje objetivo) {
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">int</span> dano = atacante.fuerza - objetivo.defensa;
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">if</span> (dano < 1) dano = 1;
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;objetivo.vida -= dano;
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(atacante.nombre + <span class="code-string">" inflige "</span> + dano + <span class="code-string">" puntos de daño"</span>);
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+                                <br>}
+                                <br><br><span class="code-keyword">public abstract class</span> Personaje {
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">protected String</span> nombre;
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">protected int</span> vida, fuerza, defensa;
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">protected</span> EstrategiaAtaque estrategiaAtaque;
+                                <br><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">public abstract void</span> atacar(Personaje objetivo);
+                                <br>}
+                                <br><br><span class="code-keyword">public class</span> Guerrero <span class="code-keyword">extends</span> Personaje {
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">public</span> Guerrero(<span class="code-keyword">String</span> nombre) {
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">this</span>.nombre = nombre;
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">this</span>.estrategiaAtaque = <span class="code-keyword">new</span> AtaqueFisico();
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+                                <br><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">@Override</span>
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">public void</span> atacar(Personaje objetivo) {
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;estrategiaAtaque.atacar(<span class="code-keyword">this</span>, objetivo);
+                                <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+                                <br>}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <footer>
+        <p>© 2023 Programación Orientada a Objetos | Recurso educativo para estudiantes de programación</p>
+        <p style="margin-top: 0.5rem; font-size: 0.9rem; opacity: 0.8;">Aprende los fundamentos de la POO con ejemplos prácticos y ejercicios progresivos</p>
+    </footer>
+
+    <script>
+        // Función para cambiar de sección
+        function cambiarSeccion(seccionId) {
+            // Ocultar todas las secciones
+            document.querySelectorAll('.seccion-activa, .hidden').forEach(seccion => {
+                seccion.classList.add('hidden');
+                seccion.classList.remove('seccion-activa');
+            });
+            
+            // Mostrar la sección seleccionada
+            document.getElementById(seccionId).classList.remove('hidden');
+            document.getElementById(seccionId).classList.add('seccion-activa');
+            
+            // Actualizar el menú
+            document.querySelectorAll('.menu-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+            
+            // Actualizar progreso
+            actualizarProgreso();
+        }
+        
+        // Función para mostrar soluciones
+        function mostrarSolucion(id) {
+            const solucionId = 'solucion-' + id;
+            const solucionElement = document.getElementById(solucionId);
+            
+            if (solucionElement.classList.contains('hidden')) {
+                // Ocultar otras soluciones
+                document.querySelectorAll('.code-block').forEach(el => {
+                    el.classList.add('hidden');
+                });
+                
+                // Mostrar esta solución
+                solucionElement.classList.remove('hidden');
+                event.target.textContent = 'Ocultar Solución';
+            } else {
+                solucionElement.classList.add('hidden');
+                event.target.textContent = 'Ver Solución';
+            }
+        }
+        
+        // Función para actualizar el progreso
+        function actualizarProgreso() {
+            const secciones = ['introduccion', 'encapsulamiento', 'herencia', 'polimorfismo', 'ejercicios'];
+            const currentIndex = secciones.indexOf(document.querySelector('.seccion-activa').id);
+            const porcentaje = ((currentIndex + 1) / secciones.length) * 100;
+            
+            document.getElementById('progress-bar').style.width = porcentaje + '%';
+            document.querySelector('.progress-container + p').textContent = Math.round(porcentaje) + '%';
+        }
+        
+        // Inicializar la primera sección
+        document.addEventListener('DOMContentLoaded', function() {
+            actualizarProgreso();
+        });
+    </script>
+</body>
+</html>
